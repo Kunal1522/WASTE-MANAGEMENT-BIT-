@@ -7,6 +7,7 @@ import cloudinary from '@/lib/cloudinary';
 export const config = {
   api: {
     bodyParser: false,
+    sizeLimit: '10mb'
   },
 };
 export async function GET() {

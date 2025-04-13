@@ -48,29 +48,21 @@ export default function CollectPage() {
     const result = await resUpload.json();
     const uploadedUrl = result.imageUrl;
     console.log(uploadedUrl);
-    const geminiRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/gemini-analyze`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+  
+    
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/gemini-analyze`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
-        imageUrl: uploadedUrl,
-        prompt: `
-          ONLY RETURN JSON NO DESCRIPTION   
-          Analyze this waste image and return a JSON object with keys:
-          wasteType ("plastic", "organic", "metal", "e-waste", or "other"),
-          confidence (a number between 0 and 1),
-          amount ("low", "medium", or "high"),
-          and points (5 for low, 10 for medium, 15 for high).
-        `,
+        imageUrl1:uploadedUrl, // URL of the uploaded image
+        imageUrl2: selectedEntry.imageURL // URL of the stored image
       }),
     });
-    const { analysis } = await geminiRes.json();
-       let parsed;
-      const cleaned = analysis.trim().replace(/^```json|```$/g, "").trim();
-      parsed = JSON.parse(cleaned);
-       console.log("parsed",parsed);
-   const pivot=true;
+    const data = await response.json();
     if (
-     pivot
+      response.ok
     ) {
       await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/update-user-points`, {
         method: 'POST',
@@ -80,6 +72,7 @@ export default function CollectPage() {
           points: parsed.points,
         }),
       });
+      
         alert('Waste collected and points updated!');
       } else {
       alert('Mismatch in analysis. Collection rejected.');

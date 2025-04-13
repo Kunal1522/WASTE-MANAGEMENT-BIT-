@@ -1,7 +1,13 @@
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '10mb',
+    },
+  },
+};
 export async function POST(req) {
   try {
     const { imageUrl, prompt } = await req.json();
-
     if (!imageUrl || !prompt) {
       return new Response(JSON.stringify({ error: 'Missing image URL or prompt' }), { 
         status: 400,
@@ -10,7 +16,6 @@ export async function POST(req) {
         }
       });
     }
-
     // Fetch image and convert to base64
     const imageRes = await fetch(imageUrl);
     const blob = await imageRes.blob();

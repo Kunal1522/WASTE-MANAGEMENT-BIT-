@@ -6,6 +6,7 @@ import cloudinary from "@/lib/cloudinary";
 export const config = {
   api: {
     bodyParser: false,
+    sizeLimit:'10mb'
   },
 };
 
