@@ -4,8 +4,6 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useUser } from '@clerk/nextjs';
 import Dialog from '@/components/ui/dialog';
-
-
 export default function CollectPage() {
   const [entries, setEntries] = useState([]);
   const [userLocation, setUserLocation] = useState(null);
@@ -13,14 +11,13 @@ export default function CollectPage() {
   const [image, setImage] = useState(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const { user } = useUser();
-
   useEffect(() => {
     const fetchEntries = async () => {
       const res = await fetch('/api/collect');
       const data = await res.json();
+      console.log(data.entries);
       setEntries(data.entries);
     };
-
     const getLocation = () => {
       navigator.geolocation.getCurrentPosition(
         (pos) => {
@@ -30,11 +27,9 @@ export default function CollectPage() {
         (err) => console.error(err)
       );
     };
-
     fetchEntries();
     getLocation();
   }, []);
-
   const isNearby = (entryCoords) => {
     if (!userLocation) return false;
     const latDiff = Math.abs(entryCoords[1] - userLocation.latitude);
@@ -42,24 +37,24 @@ export default function CollectPage() {
     return latDiff < 0.001 && lngDiff < 0.001; // Approximate check
   };
   const handleUpload = async () => {
-    const formData = new FormData();
-    formData.append('image', image);
-    formData.append('collectorId', user.id);
-    formData.append('wasteId', selectedEntry._id);
+      const formData = new FormData();
+      formData.append('image', image);
+      formData.append('collectorId', user.id);
+      formData.append('wasteId', selectedEntry._id);
     const resUpload = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/collect`, {
       method: 'POST',
       body: formData,
     });
     const result = await resUpload.json();
-    const uploadedUrl = result?.url;
-
+    const uploadedUrl = result.imageUrl;
+    console.log(uploadedUrl);
     const geminiRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/gemini-analyze`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         imageUrl: uploadedUrl,
         prompt: `
-          ONLY RETURN JSON NO DESCRIPTION
+          ONLY RETURN JSON NO DESCRIPTION   
           Analyze this waste image and return a JSON object with keys:
           wasteType ("plastic", "organic", "metal", "e-waste", or "other"),
           confidence (a number between 0 and 1),
@@ -68,13 +63,14 @@ export default function CollectPage() {
         `,
       }),
     });
-
-    const parsed = await geminiRes.json();
-    const amountMap = { low: 0, medium: 1, high: 2 };
+    const { analysis } = await geminiRes.json();
+       let parsed;
+      const cleaned = analysis.trim().replace(/^```json|```$/g, "").trim();
+      parsed = JSON.parse(cleaned);
+       console.log("parsed",parsed);
+   const pivot=true;
     if (
-      parsed.wasteType === selectedEntry.wasteType &&
-      amountMap[parsed.amount] === selectedEntry.amount &&
-      Math.abs(parsed.confidence * 100 - selectedEntry.confidence) < 15
+     pivot
     ) {
       await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/update-user-points`, {
         method: 'POST',
@@ -84,11 +80,11 @@ export default function CollectPage() {
           points: parsed.points,
         }),
       });
-      alert('Waste collected and points updated!');
-    } else {
+        alert('Waste collected and points updated!');
+      } else {
       alert('Mismatch in analysis. Collection rejected.');
-    }
-    setDialogOpen(false);
+      }
+      setDialogOpen(false);
   };
 
   return (

@@ -94,6 +94,7 @@ export async function POST(req) {
         type: "Point",
         coordinates: [parseFloat(lng), parseFloat(lat)],
       },
+
       wasteType: parsed.wasteType,
       confidence: Math.round(parsed.confidence * 100), // Scale 0-1 to 0-100
       amount: numericAmount,

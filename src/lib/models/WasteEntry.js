@@ -46,9 +46,11 @@ const WasteEntrySchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  collected:{
+    type:Boolean,
+    default:false
+  }
 });
-
 // Create a geospatial index on the location field
 WasteEntrySchema.index({ location: '2dsphere' });
-
 export default mongoose.models.WasteEntry || mongoose.model('WasteEntry', WasteEntrySchema);
