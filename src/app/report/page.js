@@ -83,7 +83,8 @@ const ReportWaste = () => {
     }
     try {
       // Send the form data to the backend API
-      const response = await fetch('/api/report', {
+      
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/report`, {
         method: 'POST',
         body: formData,
       });
