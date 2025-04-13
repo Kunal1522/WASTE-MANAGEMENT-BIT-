@@ -50,7 +50,7 @@ export default function CollectPage() {
     console.log(uploadedUrl);
   
     
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/gemini-analyze`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/gemini-compare`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -69,7 +69,7 @@ export default function CollectPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           userId: user.id,
-          points: parsed.points,
+          points: 10,
         }),
       });
       
@@ -78,6 +78,7 @@ export default function CollectPage() {
       alert('Mismatch in analysis. Collection rejected.');
       }
       setDialogOpen(false);
+      console.log(setDialogOpen);
   };
 
   return (
