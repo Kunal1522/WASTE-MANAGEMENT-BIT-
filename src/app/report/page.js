@@ -1,7 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react';
 import { useAuth } from '@clerk/nextjs';
-
 const ReportWaste = () => {
   const { userId, isSignedIn, isLoaded } = useAuth();
   const [lat, setLat] = useState(null);
@@ -13,7 +12,6 @@ const ReportWaste = () => {
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [geminiResponse, setGeminiResponse] = useState(null);
-
   // Get the user's location using Geolocation API
   useEffect(() => {
     if (navigator.geolocation) {
@@ -170,7 +168,7 @@ const ReportWaste = () => {
         <form onSubmit={handleSubmit} className="space-y-8">
           {/* Location Section */}
           <div className="bg-green-50 p-6 rounded-xl border border-green-100">
-            <h3 className="text-lg font-semibold text-black-900 mb-3">Location Information</h3>
+            <h3 className="text-lg font-semibold text-green-900 mb-3">Location Information</h3>
             {lat && lng ? (
               <div className="flex items-center bg-white p-3 rounded-lg border border-green-100 shadow-sm">
                 <div className="bg-green-100 p-3 rounded-full mr-4">
@@ -179,8 +177,8 @@ const ReportWaste = () => {
                   </svg>
                 </div>
                 <div>
-                  <p className="text-base text-gray-800">Your Current Location</p>
-                  <p className="text-sm text-gray-600">Latitude: {lat.toFixed(6)}, Longitude: {lng.toFixed(6)}</p>
+                  <p className="text-base font-medium text-gray-900">Your Current Location</p>
+                  <p className="text-sm text-gray-900">Latitude: {lat.toFixed(6)}, Longitude: {lng.toFixed(6)}</p>
                 </div>
               </div>
             ) : (
@@ -188,14 +186,14 @@ const ReportWaste = () => {
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-amber-500 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <p className="text-base text-gray-700">Retrieving your location...</p>
+                <p className="text-base text-gray-900">Retrieving your location...</p>
               </div>
             )}
           </div>
 
           {/* Image Upload Section */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-gray-800">Upload Waste Image</h3>
+            <h3 className="text-lg font-semibold text-green-900">Upload Waste Image</h3>
             <div className="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-green-400 transition-colors">
               <input
                 type="file"
@@ -215,8 +213,8 @@ const ReportWaste = () => {
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mx-auto text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
-                    <p className="text-gray-700 text-lg font-medium">Click to upload an image</p>
-                    <p className="text-gray-500">JPG, PNG or GIF (max 10MB)</p>
+                    <p className="text-gray-900 text-lg font-medium">Click to upload an image</p>
+                    <p className="text-gray-900">JPG, PNG or GIF (max 10MB)</p>
                   </div>
                 ) : null}
               </label>
@@ -252,17 +250,17 @@ const ReportWaste = () => {
 
           {/* Description Section */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-gray-800">Description</h3>
+            <h3 className="text-lg font-semibold text-green-900">Description</h3>
             <div>
               <textarea
                 id="description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Describe the waste (type, amount, location details, etc.)"
-                className="w-full p-4 border border-gray-300 rounded-xl focus:ring-green-500 focus:border-green-500 min-h-[120px] text-base text-gray-800"
+                className="w-full p-4 border border-gray-300 rounded-xl focus:ring-green-500 focus:border-green-500 min-h-[120px] text-base text-gray-900"
                 disabled={isLoading}
               />
-              <p className="mt-2 text-sm text-gray-500">Optional: Add any additional information that might be helpful.</p>
+              <p className="mt-2 text-sm text-gray-900">Optional: Add any additional information that might be helpful.</p>
             </div>
           </div>
 
@@ -302,17 +300,17 @@ const ReportWaste = () => {
           <div className="p-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
               <div className="bg-green-50 p-4 rounded-xl border border-green-100">
-                <p className="text-sm font-medium text-green-800 mb-1">Waste Type</p>
+                <p className="text-sm font-medium text-green-900 mb-1">Waste Type</p>
                 <div className="flex items-center">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-green-600" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M2 5a2 2 0 012-2h12a2 2 0 012 2v2a2 2 0 01-2 2H4a2 2 0 01-2-2V5zm14 1a1 1 0 11-2 0 1 1 0 012 0zM2 13a2 2 0 012-2h12a2 2 0 012 2v2a2 2 0 01-2 2H4a2 2 0 01-2-2v-2zm14 1a1 1 0 11-2 0 1 1 0 012 0z" clipRule="evenodd" />
                   </svg>
-                  <p className="text-lg font-semibold text-gray-800">{geminiResponse.wasteType}</p>
+                  <p className="text-lg font-semibold text-gray-900">{geminiResponse.wasteType}</p>
                 </div>
               </div>
               
               <div className="bg-green-50 p-4 rounded-xl border border-green-100">
-                <p className="text-sm font-medium text-green-800 mb-1">Points Earned</p>
+                <p className="text-sm font-medium text-green-900 mb-1">Points Earned</p>
                 <div className="flex items-center">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-green-600" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
@@ -323,7 +321,7 @@ const ReportWaste = () => {
             </div>
             
             <div className="mb-8">
-              <p className="text-sm font-medium text-gray-700 mb-2">Analysis Confidence</p>
+              <p className="text-sm font-medium text-gray-900 mb-2">Analysis Confidence</p>
               <div className="w-full h-4 bg-gray-200 rounded-full overflow-hidden">
                 <div 
                   className={`h-full ${
@@ -339,9 +337,9 @@ const ReportWaste = () => {
                 ></div>
               </div>
               <div className="flex justify-between mt-1">
-                <span className="text-xs text-gray-600">0%</span>
-                <span className="text-xs font-medium">{geminiResponse.confidence}%</span>
-                <span className="text-xs text-gray-600">100%</span>
+                <span className="text-xs text-gray-900">0%</span>
+                <span className="text-xs font-medium text-gray-900">{geminiResponse.confidence}%</span>
+                <span className="text-xs text-gray-900">100%</span>
               </div>
             </div>
             
@@ -349,10 +347,10 @@ const ReportWaste = () => {
               <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mx-auto text-green-600 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <p className="text-green-800 font-medium">
+              <p className="text-green-900 font-medium">
                 Thank you for your contribution to a cleaner environment!
               </p>
-              <p className="text-sm text-gray-600 mt-1">
+              <p className="text-sm text-gray-900 mt-1">
                 Your report has been submitted successfully and points have been added to your profile.
               </p>
             </div>

@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
         <body className={poppins.className}>
           <Navbar />
           <UserSync />
-          <main className="pt-16"> {/* Add padding to account for fixed navbar */}
+          <main className="pt-24"> {/* Increased padding to ensure content appears below the navbar */}
             {children}
           </main>
         </body>

@@ -8,8 +8,8 @@
   --green-light: #C8E6C9;
   --green-dark: #1B5E20;
   --accent-green: #81C784;
-  --text-dark: #333333;
-  --text-medium: #555555; 
+  --text-dark: #000000;
+  --text-medium: #222222; 
 }
 
 @theme inline {
@@ -40,14 +40,68 @@ body {
 }
 
 h1, h2, h3, h4, h5 {
-  color: var(--text-dark);
+  color: #000000 !important;
   font-weight: 600;
 }
 
 p {
-  color: var(--text-dark);
+  color: #000000 !important;
   font-size: 1.05rem;
   line-height: 1.7;
+}
+
+/* Direct text color overrides */
+.text-gray-400, .text-gray-500, .text-gray-600, .text-gray-700, .text-gray-800, .text-gray-900 {
+  color: #000000 !important;
+}
+
+.glass-card {
+  background: white !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* Background fixes */
+.bg-white {
+  background-color: white !important;
+}
+
+.bg-gray-50 {
+  background-color: #f9fafb !important;
+}
+
+.bg-green-50 {
+  background-color: #e6f5ea !important;
+}
+
+/* Force black text everywhere */
+* {
+  color: #000000;
+}
+
+/* Explicit exception classes */
+.text-white, 
+.bg-green-600 *, 
+.bg-green-700 *, 
+.bg-green-800 *,
+.bg-yellow-500 *, 
+.bg-amber-700 *,
+.bg-gray-400 * {
+  color: white !important;
+}
+
+/* Specific button text */
+button.bg-green-600, 
+button.bg-green-700,
+button.bg-green-800,
+.bg-green-600 a,
+.bg-green-700 a,
+.bg-green-800 a {
+  color: white !important;
+}
+
+/* Table header text */
+thead.bg-green-600 th {
+  color: white !important;
 }
 
 /* Enhanced Tree Animation */
@@ -77,6 +131,15 @@ p {
   }
 }
 
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
 .tree-animation-circle {
   animation: pulseGreen 3s infinite;
 }
@@ -98,12 +161,42 @@ p {
 .tree-image-container {
   position: relative;
   z-index: 10;
+  animation: float 6s ease-in-out infinite;
 }
 
 .tree-image-container img {
   transition: transform 0.5s ease;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
 }
 
 .tree-image-container:hover img {
   transform: scale(1.05);
+}
+
+/* Glass Effect (No transparency) */
+.glass-card {
+  background-color: white !important;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* Premium Card Effect */
+.premium-card {
+  background-color: white !important;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(76, 175, 80, 0.2);
+}
+
+.premium-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(76, 175, 80, 0.15);
+}
+
+/* Enhanced Gradients */
+.green-gradient {
+  background: linear-gradient(135deg, var(--green-primary) 0%, var(--green-secondary) 100%);
+}
+
+.accent-gradient {
+  background: linear-gradient(135deg, var(--accent-green) 0%, var(--green-primary) 100%);
 }

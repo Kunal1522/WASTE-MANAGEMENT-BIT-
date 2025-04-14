@@ -42,7 +42,6 @@ export async function POST(req) {
         }
       ).end(buffer);
     });
-
     return NextResponse.json({ imageUrl: result.secure_url }, { status: 200 });
   } catch (err) {
     console.error('[IMAGE_UPLOAD_ERROR]', err);
