@@ -13,6 +13,9 @@ const poppins = Poppins({
 export const metadata = {
   title: 'Waste Management App',
   description: 'Track and collect waste for environmental impact',
+  icons: {
+    icon: '/tree.png', // or '/my-icon.png'
+  },
 }
 
 export default function RootLayout({ children }) {
